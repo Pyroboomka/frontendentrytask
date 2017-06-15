@@ -7,7 +7,6 @@ import Immutable from 'immutable'
 export const REQUEST_ARTICLE = 'REQUEST_ARTICLE'
 export const RECEIVE_ARTICLE = 'RECEIVE_ARTICLE'
 export const REQUEST_FAIL_ARTICLES = 'REQUEST_FAIL_ARTICLES'
-export const INC_OFFSET = 'INC_OFFSET'
 export const RECEIVE_FULL_ARTICLE = 'RECEIVE_FULL_ARTICLE'
 export const RECEIVE_ARTICLE_COMMENTS = 'RECEIVE_ARTICLE_COMMENTS'
 export const DELETE_ARTICLE = 'DELETE_ARTICLE'
@@ -121,7 +120,6 @@ export function fetchArticleCommentsIfNeeded (id) {
     const data = getState().getIn(['articles', 'data'])
     const isFetching = getState().getIn(['articles', 'isFetching'])
     const article = data.find(function (item) { return item.id === id })
-    console.log(article.get('comments'))
     if (article.get('comments').size === 0 && !isFetching) {
       dispatch(fetchArticleComments(id))
     }
