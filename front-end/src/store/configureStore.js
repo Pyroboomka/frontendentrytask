@@ -13,8 +13,9 @@ export function configureStore (preLoadedState) {
       rootReducer,
       preLoadedState,
       composeEnhancers(
-          applyMiddleware(middleware),
-          applyMiddleware(thunk))
+          applyMiddleware(thunk),
+          applyMiddleware(middleware)
+          )
   )
   return store
 }

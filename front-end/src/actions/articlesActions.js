@@ -1,6 +1,7 @@
 import { composeArticlesURLWithOffset, composeArticleTextURL, getPostCommentURL,
   composeArticleCommentsURL, getPostArticleURL } from '../utils/urlUtils'
 import { Article } from '../reducers/articlesReducer'
+import { goBack, push } from 'react-router-redux'
 import Immutable from 'immutable'
 
 export const REQUEST_ARTICLE = 'REQUEST_ARTICLE'
@@ -17,10 +18,12 @@ function requestArticles () {
   }
 }
 
-function errorInArticles () {
+function errorInArticles (message) {
   return (dispatch) => {
-    console.error('My api told me everything is 200, but all i got is []')
-    return dispatch({ type: REQUEST_FAIL_ARTICLES })
+    console.error(message)
+    return dispatch({
+      type: REQUEST_FAIL_ARTICLES,
+      message })
   }
 }
 
@@ -53,7 +56,8 @@ function fetchArticle (url, offset) {
       .then(res => res.json())
       .then(json => {
         if (json.length === 0) {
-          return dispatch(errorInArticles())
+          dispatch(errorInArticles('Got nothing from backend'))
+          return dispatch(goBack())
         }
         let article = new Article(json[0])
         dispatch(receiveArticle(article, offset))
@@ -117,6 +121,7 @@ export function fetchArticleCommentsIfNeeded (id) {
     const data = getState().getIn(['articles', 'data'])
     const isFetching = getState().getIn(['articles', 'isFetching'])
     const article = data.find(function (item) { return item.id === id })
+    console.log(article.get('comments'))
     if (article.get('comments').size === 0 && !isFetching) {
       dispatch(fetchArticleComments(id))
     }
@@ -145,7 +150,7 @@ export function submitArticle (newArticle) {
  * Хотя можно сэкономить на fetch текста!
  * Печальный опыт получен :(
  */
-        return null
+        return dispatch(push('/'))
       })
       .catch(err => console.error(err))
   }

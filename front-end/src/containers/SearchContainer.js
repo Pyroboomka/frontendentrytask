@@ -16,7 +16,7 @@ class Search extends Component {
     const { data } = this.props
     const results = data
       .filter(item => inRange(item, this.state.dateFrom, this.state.dateTo))
-      .filter(item => item.title.indexOf(this.state.title) > -1)
+      .filter(item => item.title.toLowerCase().indexOf(this.state.title.toLowerCase()) > -1)
     return (
       <div className='search-results'>
         <h4>Search results:</h4>
@@ -36,6 +36,7 @@ class Search extends Component {
       const itemDate = new Date(item.get('date'))
       let fromD = new Date(from)
       let toD = new Date(to)
+      toD = toD.setDate(toD.getDate() + 1)
       return (fromD <= itemDate && itemDate <= toD)
     }
   }

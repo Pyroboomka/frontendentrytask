@@ -58,7 +58,8 @@ class Articles extends Component {
         </div>
         <div className='page-buttons'>
           <div className='backward'>
-            <button onClick={this.handleNavClick.bind(this, 'backward')}>Previous</button>
+            <button disabled={this.props.currentOffset === 0}
+              onClick={this.handleNavClick.bind(this, 'backward')}>Previous</button>
           </div>
           <div className='forward'>
             <button onClick={this.handleNavClick.bind(this, 'forward')}>Next</button>
