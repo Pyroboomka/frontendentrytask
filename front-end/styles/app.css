@@ -1,0 +1,62 @@
+html {
+  overflow-y: scroll;
+}
+h4 {
+  font-size: 1em;
+}
+
+.nav {
+  display: flex;
+  height: 30px;
+  justify-content: space-between;
+}
+.nav-logo {
+  flex: 20;
+}
+.nav-links {
+  display: flex;
+  flex: 40;
+  justify-content: space-around;
+  margin-left: auto;
+}
+.nav-links a {
+  padding: 0 10px 0 10px;
+}
+.container {
+  margin-top: 50px;
+}
+.article-title {
+  cursor: pointer;
+}
+.error {
+  border: 1px solid red;
+  text-align: center;
+  margin: -40px 0 10px 0;
+}
+.addArticle-form {
+  margin-top: 50px;
+}
+.addArticle-titlewrap {
+  display: flex;
+  justify-content: flex-start;
+}
+.addArticle-title {
+  margin-left: 5px;
+  width: 100%
+}
+.fl-r-wrap {
+  display: flex;
+  justify-content: flex-end;
+}
+.fl-r-wrap input {
+  width: 100px;
+}
+.button-delete {
+  height: 30px;
+  align-self: center;
+}
+
+.page-buttons {
+  display:flex;
+  justify-content: space-between;
+}
