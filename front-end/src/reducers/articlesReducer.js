@@ -21,8 +21,10 @@ function articles (state = initialArticlesState, action) {
       return state.set('isFetching', true)
     }
     case (RECEIVE_ARTICLE): {
-      state = state.updateIn(['data', action.offset], article => action.article)
-      return state.set('isFetching', false)
+      return state.withMutations(state => {
+        state.updateIn(['data', action.offset], article => action.article)
+        state.set('isFetching', false)
+      })
     }
     case (REQUEST_FAIL_ARTICLES): {
       return state.set('isFetching', false)
@@ -33,13 +35,17 @@ function articles (state = initialArticlesState, action) {
     }
     case (RECEIVE_FULL_ARTICLE): {
       const articleKey = state.get('data').findKey(function (item) { return item.id === action.article.id })
-      state = state.updateIn(['data', articleKey], article => action.article)
-      return state.set('isFetching', false)
+      return state.withMutations(state => {
+        state.updateIn(['data', articleKey], article => action.article)
+        state.set('isFetching', false)
+      })
     }
     case (RECEIVE_ARTICLE_COMMENTS): {
       const articleKey = state.get('data').findKey(function (item) { return item.id === action.id })
-      state = state.mergeIn(['data', articleKey, 'comments'], state.getIn(['data', articleKey, 'comments']), action.comments)
-      return state.set('isFetching', false)
+      return state.withMutations(state => {
+        state.mergeIn(['data', articleKey, 'comments'], state.getIn(['data', articleKey, 'comments']), action.comments)
+        state.set('isFetching', false)
+      })
     }
     default: {
       return state
